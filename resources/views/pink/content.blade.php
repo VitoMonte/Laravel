@@ -20,7 +20,7 @@
                     <h2><a href="{{ route('portfolios.show', ['alias' =>$item->alias]) }}">{{ $item->title }}</a></h2>
                     <p class="work-categories">in: <a href="#">{{ $item->filter->title }}</a></p>
                     {!! str_limit($item->text, 315) !!}
-                        <a href="{{ route('portfolios.show', ['alias' =>$item->alias]) }}" class="read-more">|| Read more</a>
+                        <a href="{{ route('portfolios.show', ['alias' =>$item->alias]) }}" class="read-more">|| {{ Lang::get('ru.read_more') }}</a>
                 </div>
             </div>
             
