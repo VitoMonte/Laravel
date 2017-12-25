@@ -43,6 +43,11 @@ class SiteController extends Controller
         $navigation = view(env('THEME'). '.navigation')->with('menu',$menu)->render();
         $this->vars = array_add($this->vars, 'navigation', $navigation);
 
+        if ($this->contentRightBar) {
+            $rightBar = view(env('THEME').'.rightBar')->with('content_rightBar', $this->contentRightBar)->render();
+            $this->vars = array_add($this->vars, 'rightBar', $rightBar);
+        }
+
    		return view($this->template)->with($this->vars);
    	}
 
@@ -51,7 +56,6 @@ class SiteController extends Controller
         $menu = $this->m_rep->get();
 
         $mBuilder = Menu::make('MyNav', function($m) use ($menu){
-
             foreach ($menu as $item) {
                 if($item->parent == 0) {
                     $m->add($item->title, $item->path)->id($item->id);
@@ -61,7 +65,6 @@ class SiteController extends Controller
                     }
                 }
             }
-
         });
 
         //dd($mBuilder);
