@@ -10,11 +10,16 @@ abstract class Repository {
 	//Объект модели получения определенных данных
 	protected $model = false;
 
-	public function get($select = '*', $take = false)
+	public function get($select = '*', $take = false , $pagination = false)
 	{
 		$builder = $this->model->select($select);
+
 		if($take) {
 			$builder->take($take);
+		}
+
+		if ($pagination) {
+			return $this->check_and_decode($builder->paginate(Config::get('settings.paginate')));
 		}
 
 		return $this->check_and_decode($builder->get());

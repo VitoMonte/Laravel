@@ -10,6 +10,9 @@ use Menu;
 
 class SiteController extends Controller
 {
+    protected $keywords;
+    protected $meta_desc;
+    protected $title;
     //  Хранение объекта класса портфолио репозиторий (Хранение логики по работе с портфолио)
     protected $p_rep;
     //  Хранение объекта класса слайдер репозиторий (Хранение логики по работе со слайдером)
@@ -26,7 +29,7 @@ class SiteController extends Controller
     protected $vars=[];
 
     //Значения сайдбара
-    protected $bar = false;
+    protected $bar = 'no';
     protected $contentRightBar = false;
     protected $contentLeftBar = false;
 
@@ -41,12 +44,20 @@ class SiteController extends Controller
         $menu = $this->getMenu();
 
         $navigation = view(env('THEME'). '.navigation')->with('menu',$menu)->render();
-        $this->vars = array_add($this->vars, 'navigation', $navigation);
+        $footer = view(env('THEME'). '.footer')->render();
 
         if ($this->contentRightBar) {
             $rightBar = view(env('THEME').'.rightBar')->with('content_rightBar', $this->contentRightBar)->render();
             $this->vars = array_add($this->vars, 'rightBar', $rightBar);
         }
+
+        $this->vars = array_add($this->vars, 'bar', $this->bar);
+        $this->vars = array_add($this->vars, 'navigation', $navigation);
+        $this->vars = array_add($this->vars, 'ketwords', $this->keywords);
+        $this->vars = array_add($this->vars, 'meta_desc', $this->meta_desc);
+        $this->vars = array_add($this->vars, 'title', $this->title);        
+        $this->vars = array_add($this->vars, 'footer', $footer);
+
 
    		return view($this->template)->with($this->vars);
    	}
