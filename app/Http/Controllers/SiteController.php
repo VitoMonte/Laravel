@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Corp\Repositories\MenusRepository;
 
+
 use Menu;
 
 class SiteController extends Controller
@@ -27,6 +28,7 @@ class SiteController extends Controller
 
     //Массив передаваемых в шаблон переменных
     protected $vars=[];
+
 
     //Значения сайдбара
     protected $bar = 'no';
@@ -50,6 +52,10 @@ class SiteController extends Controller
             $rightBar = view(env('THEME').'.rightBar')->with('content_rightBar', $this->contentRightBar)->render();
             $this->vars = array_add($this->vars, 'rightBar', $rightBar);
         }
+
+        $this->vars = array_add($this->vars, 'keywords', $this->keywords);
+        $this->vars = array_add($this->vars, 'meta_desc', $this->meta_desc);
+        $this->vars = array_add($this->vars, 'title', $this->title);
 
         $this->vars = array_add($this->vars, 'bar', $this->bar);
         $this->vars = array_add($this->vars, 'navigation', $navigation);
@@ -78,10 +84,22 @@ class SiteController extends Controller
             }
         });
 
-        //dd($mBuilder);
+        //dd($menu);
 
 
         return $mBuilder;
+    }
+
+    protected function getKeyWords($params) {        
+        $text = explode(" ", strip_tags($params));
+        $pieces = array_count_values($text);
+        $keyword = '';
+        foreach ($pieces as $key => $value) {
+            if (iconv_strlen($key) > 3 && $value > 2) {
+                $keyword = $keyword . ' ' .$key;
+            } 
+        }
+        return $keyword;
     }
 
 

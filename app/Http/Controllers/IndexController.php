@@ -11,6 +11,7 @@ use Config;
 class IndexController extends SiteController
 {
 
+
     public function __construct(SlidersRepository $s_rep, PortfoliosRepository $p_rep, ArticlesRepository $a_rep)
     {
         parent::__construct(new \Corp\Repositories\MenusRepository(new \Corp\Menu));
@@ -35,9 +36,9 @@ class IndexController extends SiteController
         $this->meta_desc = trans('ru.home_page');
         $this->title = trans('ru.home_page');
 
-        $this->vars = array_add($this->vars, 'keywords', $this->keywords);
-        $this->vars = array_add($this->vars, 'meta_desc', $this->meta_desc);
-        $this->vars = array_add($this->vars, 'title', $this->title);
+        //$this->vars = array_add($this->vars, 'keywords', $this->keywords);
+        //$this->vars = array_add($this->vars, 'meta_desc', $this->meta_desc);
+        //$this->vars = array_add($this->vars, 'title', $this->title);
 
         $portfolios = $this->getPortfolio();
         

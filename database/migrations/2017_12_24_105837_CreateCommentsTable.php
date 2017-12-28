@@ -20,7 +20,7 @@ class CreateCommentsTable extends Migration
 
             $table->string('name');
             $table->string('email');
-            $table->string('site');
+            $table->string('site')->nullable();
 
             $table->integer('parent_id');
 

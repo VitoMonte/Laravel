@@ -28,6 +28,7 @@
   <title>{{ $title or '' }}</title>
   <meta name="description" content="{{ $meta_desc or '' }}">
   <meta name="keywords" content="{{ $keywords  or ''}}">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- [favicon] begin -->
   <link rel="shortcut icon" type="image/x-icon" href="{{  asset(env('THEME')) }}/images/favicon.ico" />
   <link rel="icon" type="image/x-icon" href="{{  asset(env('THEME')) }}/images/favicon.ico" />
@@ -77,12 +78,13 @@
   <script type="text/javascript" src="{{  asset(env('THEME')) }}/js/shortcodes.js"></script>
   <script type="text/javascript" src="{{  asset(env('THEME')) }}/js/jquery.colorbox-min.js"></script> <!-- nav -->
   <script type="text/javascript" src="{{  asset(env('THEME')) }}/js/jquery.tweetable.js"></script>
+  <script type="text/javascript" src="{{  asset(env('THEME')) }}/js/myscripts.js"></script>
 
 </head>
 <!-- END HEAD -->
 
 <!-- START BODY -->
-<body class="no_js responsive page-template-home-php stretched">
+<body class="no_js responsive {{ (Route::currentRouteName() == 'home') || (Route::currentRouteName() == 'portfolios.index') || (Route::currentRouteName() == 'portfolios.show') ? 'page-template-home-php' : ''}} stretched">
   
   <!-- START BG SHADOW -->
   <div class="bg-shadow">
@@ -119,12 +121,21 @@
         </div>
         
       </div>
-      <!-- END HEADER -->
-      
+      <!-- END HEADER -->      
       <!-- START SLIDER -->
       @yield('slider')
+      <div class="wrap_result"></div>
       <!-- END SLIDER -->
-      
+      @if(Route::currentRouteName() == 'portfolios.index')
+       <!-- START PAGE META -->
+        <div id="page-meta">
+            <div class="inner group">
+                <h3>Welcome to my portfolio page</h3>
+                <h4>... i hope you enjoy my works</h4>
+            </div>
+        </div>
+        <!-- END PAGE META -->
+      @endif
       <!-- START PRIMARY -->
       <div id="primary" class="sidebar-{{ isset($bar) ? $bar : 'no' }}">
         <div class="inner group">
